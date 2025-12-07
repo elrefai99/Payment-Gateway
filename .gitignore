@@ -9,3 +9,5 @@ SQL
 errors.log
 test
 *test
+
+/src/generated/prisma

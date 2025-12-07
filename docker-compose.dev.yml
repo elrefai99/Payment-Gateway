@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: node-app-dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "9000:9000"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: development
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - redis
+    command: npm run dev
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: always
+
+volumes:
+  redis_data:

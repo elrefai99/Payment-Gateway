@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: node-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - redis
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    volumes:
+      - redis_data:/data
+    restart: always
+
+volumes:
+  redis_data:

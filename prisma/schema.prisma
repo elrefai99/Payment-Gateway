@@ -6,11 +6,31 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
-  password  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum orderEnums {
+  approved
+  pending
+  canceled
+  failed
+  refunded
+}
+
+model OrderPaymob {
+  id                  Int        @id @default(autoincrement())
+  userId              Int?
+  order_id            String?
+  tranx_id            String?
+  status              orderEnums @default(approved)
+  success             Boolean?
+  price               Float?
+  source_data_type    String?
+  source_data_pan     String?
+  source_data_subType String?
+  data_message        String?
+  acq_response_code   String?
+  txn_response_code   String?
+  hmac                String?
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+
+  @@index([status])
 }

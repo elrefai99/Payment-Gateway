@@ -12,11 +12,13 @@ import "dotenv/config"
 import express, { Request, Response } from 'express'
 import client from "prom-client";
 import appConf from './app.conf';
+import appModule from './app.module';
 
 const app = express()
 
 
 appConf(app)
+appModule(app)
 
 app.get('/metrics', async (_req, res) => {
      res.set('Content-Type', client.register.contentType);

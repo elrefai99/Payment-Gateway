@@ -11,6 +11,9 @@ importers:
       '@prisma/adapter-neon':
         specifier: ^7.1.0
         version: 7.1.0
+      axios:
+        specifier: ^1.13.2
+        version: 1.13.2
       cookie-parser:
         specifier: ^1.4.7
         version: 1.4.7

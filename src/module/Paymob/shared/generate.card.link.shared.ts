@@ -1,9 +1,9 @@
 import axios from "axios";
 import { paymobENV } from "../env";
 
-export async function generatePaymentKeyCard(authToken: string, orderReg: string, packageData: any, user: any) {
+export async function generatePaymentKeyCard(authToken: string, orderReg: string, packageData: any, user: any): Promise<string> {
 
-     const paymentReg = await axios.post(`${paymobENV.PAYMOB_API}/acceptance/payment_keys`, {
+     const request = await axios.post(`${paymobENV.PAYMOB_API}/acceptance/payment_keys`, {
           auth_token: authToken,
           amount_cents: packageData.price * 100,
           expiration: 3600,
@@ -27,7 +27,7 @@ export async function generatePaymentKeyCard(authToken: string, orderReg: string
           integration_id: paymobENV.PAYMOB_INTEGRATION_ID_CARD_TEST,
      }
      );
-     const linkRedirect = `https://accept.paymob.com/api/acceptance/iframes/${paymobENV.PAYMOB_IFREAMS_ID}?payment_token=${paymentReg.data.token}`;
+     const link = `https://accept.paymob.com/api/acceptance/iframes/${paymobENV.PAYMOB_IFREAMS_ID}?payment_token=${request.data.token}`;
 
-     return linkRedirect;
+     return link;
 }
